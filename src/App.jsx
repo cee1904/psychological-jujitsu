@@ -9,7 +9,10 @@ const App = () => {
       {/* Starter Code provided by teacher 
           -- you can remove this once you've updated this file
        */}
-      Hello World
+      <TargetArea/>
+      <PlayerArea/>
+      <PlayerArea/>      
+      <HumanPlayerArea/>
     </main>
   )
 }
