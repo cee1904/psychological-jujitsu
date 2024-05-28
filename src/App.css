@@ -9,9 +9,15 @@ body {
 main {
   display: grid;
   grid-template-areas:
+    "head head head"
     ". target ."
     "one round  two"
     ". human .";
+}
+.header {
+  grid-area: head;
+  text-align: center;
+  border-bottom: 1px solid white;
 }
 .round {
   grid-area: round;

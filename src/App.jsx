@@ -139,6 +139,7 @@ const App = () => {
 
   return (
     <main>
+      <h1 className="header">Psychological Jujitsu</h1>
       <div className="target">
         <h2>Target Area</h2>
         Targets so far: {targets.slice(0, targetIndex + 1).join(", ")}
