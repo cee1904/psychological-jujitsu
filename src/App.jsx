@@ -55,19 +55,27 @@ const App = () => {
    */
   const getWinnerIndex = (bids) => {
     let maxCard = -1;
+    // First determine the maximum bid
     for (let b of bids) {
       if (b > maxCard) {
         maxCard = b;
       }
     }
     let idx = null; // not found
+    // Iterate through each bid to see if it
+    // is the max card...
     for (let i = 0; i < bids.length; i++) {
       let bid = bids[i];
-      if (bid === maxCard) {
+      // If this matches the max bid...
+      if (bid === maxCard) { 
         if (idx !== null) {
-          // Duplicate
-          return -1; // nobody wins!
+          // Duplicate -- if there are more than one
+          // winning bid, then nobody wins!
+          return -1; 
         } else {
+          // Otherwise, winning index will be this one
+          // (unless we hit another winning bid as we
+          // iterate through)          
           idx = i;
         }
       }
@@ -75,12 +83,17 @@ const App = () => {
     return idx;
   };
 
+  /* 
+  * onCardPlayed takes a single human play and then uses it to
+  * trigger our AI plays which in turn trigger the update to the
+  * game for the next round. Basically all the logic for each
+  * round of the game is contained in onCardPlayed :-)
+  */
   const onCardPlayed = (humanCard) => {
-    console.log("Wow oh wow they clicked ", humanCard);
-    // Update the human player
-    // add new card to "played" list
+    // Update the human player first:
+    // 1. add played card to "played" list
     setHumanPlayed([...humanPlayed, humanCard]);
-    // Remove card from hand
+    // 2. Remove played card from hand
     setHumanHand(humanHand.filter((v) => v !== humanCard));
     // Now iterate through the AI to find out the AI plays...
     // AI needs to know what cards we've bid on (targetsSoFar)
