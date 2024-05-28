@@ -67,15 +67,15 @@ const App = () => {
     for (let i = 0; i < bids.length; i++) {
       let bid = bids[i];
       // If this matches the max bid...
-      if (bid === maxCard) { 
+      if (bid === maxCard) {
         if (idx !== null) {
           // Duplicate -- if there are more than one
           // winning bid, then nobody wins!
-          return -1; 
+          return -1;
         } else {
           // Otherwise, winning index will be this one
           // (unless we hit another winning bid as we
-          // iterate through)          
+          // iterate through)
           idx = i;
         }
       }
@@ -83,12 +83,12 @@ const App = () => {
     return idx;
   };
 
-  /* 
-  * onCardPlayed takes a single human play and then uses it to
-  * trigger our AI plays which in turn trigger the update to the
-  * game for the next round. Basically all the logic for each
-  * round of the game is contained in onCardPlayed :-)
-  */
+  /*
+   * onCardPlayed takes a single human play and then uses it to
+   * trigger our AI plays which in turn trigger the update to the
+   * game for the next round. Basically all the logic for each
+   * round of the game is contained in onCardPlayed :-)
+   */
   const onCardPlayed = (humanCard) => {
     // Update the human player first:
     // 1. add played card to "played" list
@@ -147,13 +147,14 @@ const App = () => {
     setHumanWon([]);
     setAIWon(ais.map((a) => []));
     setAIPlayed(ais.map((a) => []));
+    setTrash([]);
     setTargetIndex(0);
   };
 
   return (
     <main>
       <h1 className="header">Psychological Jujitsu</h1>
-      <div className="target">        
+      <div className="target">
         <TargetArea
           target={targets[targetIndex]}
           trash={trash}
