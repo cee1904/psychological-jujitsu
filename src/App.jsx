@@ -4,19 +4,181 @@ import { Hand } from "./Hand";
 import { CardsPlayed } from "./CardsPlayed";
 import { HumanPlayerArea } from "./HumanPlayerArea";
 import { AISelector } from "./AISelector";
+import { PlayerArea } from "./PlayerArea";
+import { TargetArea } from "./TargetArea";
+import { useState } from "react";
+import { orderedDummy, targetDummy } from "./dumbAi";
+
+const generateHand = (shuffle = false) => {
+  const hand = [];
+  for (let i = 1; i <= 13; i++) {
+    hand.push(i);
+  }
+  if (shuffle) {
+    for (let i = 0; i < hand.length; i++) {
+      let j = Math.floor(Math.random() * hand.length);
+      let temp = hand[j];
+      hand[j] = hand[i];
+      hand[i] = temp;
+    }
+  }
+  return hand;
+};
+
 const App = () => {
+  const targetSuit = "hearts";
+  const otherSuits = [
+    "diamonds",
+    "spades",
+    "clubs",
+    "lizards",
+    "fruit",
+    "tshirts",
+    "robots",
+  ];
+  const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
+  const [ais, setAIs] = useState([orderedDummy, targetDummy]);
+  const [trash, setTrash] = useState([]);
+  const [humanHand, setHumanHand] = useState(generateHand());
+  // generate a hand for each AI -- will need new logic if we actually
+  // change the number of AIs
+  const [aiHands, setAIHands] = useState(ais.map((a) => generateHand()));
+  const [targets, setTargets] = useState(generateHand(true));
+  const [targetIndex, setTargetIndex] = useState(0);
+  const [humanPlayed, setHumanPlayed] = useState([]);
+  const [humanWon, setHumanWon] = useState([]);
+  const [aiPlayed, setAIPlayed] = useState(ais.map((a) => []));
+  const [aiWon, setAIWon] = useState(ais.map((a) => []));
+
+  /*
+   * @return the index of winner, or -1 if no one wins
+   */
+  const getWinnerIndex = (bids) => {
+    let maxCard = -1;
+    for (let b of bids) {
+      if (b > maxCard) {
+        maxCard = b;
+      }
+    }
+    let idx = null; // not found
+    for (let i = 0; i < bids.length; i++) {
+      let bid = bids[i];
+      if (bid === maxCard) {
+        if (idx !== null) {
+          // Duplicate
+          return -1; // nobody wins!
+        } else {
+          idx = i;
+        }
+      }
+    }
+    return idx;
+  };
+
+  const onCardPlayed = (humanCard) => {
+    console.log("Wow oh wow they clicked ", humanCard);
+    // Update the human player
+    // add new card to "played" list
+    setHumanPlayed([...humanPlayed, humanCard]);
+    // Remove card from hand
+    setHumanHand(humanHand.filter((v) => v !== humanCard));
+    // Now iterate through the AI to find out the AI plays...
+    // AI needs to know what cards we've bid on (targetsSoFar)
+    let targetsSoFar = targets.slice(0, targetIndex + 1);
+    // Make an array to store the decisions of each AI player...
+    let aiCards = [];
+    // Get each AI's play
+    for (let idx = 0; idx < ais.length; idx++) {
+      let hand = aiHands[idx];
+      let played = aiPlayed[idx];
+      let won = aiWon[idx];
+      let ai = ais[idx];
+      let card = ai.getNextCard(hand, targetsSoFar, [
+        humanPlayed,
+        // List all other AI plays except our own
+        ...aiPlayed.filter((pp) => pp != played),
+      ]);
+      aiCards.push(card);
+    }
+    // Now we know all the cards being played!
+    // Let's update the AI hands and played lists with their decisions
+    // Add AI cards to played list...
+    setAIPlayed(aiPlayed.map((played, idx) => [...played, aiCards[idx]]));
+    // Remove played cards from list of cards
+    setAIHands(
+      aiHands.map((hand, idx) => hand.filter((card) => card !== aiCards[idx]))
+    );
+    // Finally, let's update the winner and the target...
+    // Pick the winner, and update...
+    let winner = getWinnerIndex([humanCard, ...aiCards]);
+    if (winner === -1) {
+      setTrash([...trash, targets[targetIndex]]);
+    } else {
+      if (winner === 0) {
+        // human wins!
+        setHumanWon([...humanWon, targets[targetIndex]]);
+      } else {
+        const newAiWon = [...aiWon];
+        newAiWon[winner - 1] = [...newAiWon[winner - 1], targets[targetIndex]];
+        setAIWon(newAiWon);
+      }
+    }
+    setTargetIndex(targetIndex + 1);
+  };
+
+  const resetGame = () => {
+    setTargets(generateHand(true));
+    setAIHands(ais.map((a) => generateHand()));
+    setHumanHand(generateHand());
+    setHumanPlayed([]);
+    setHumanWon([]);
+    setAIWon(ais.map((a) => []));
+    setAIPlayed(ais.map((a) => []));
+    setTargetIndex(0);
+  };
+
   return (
     <main>
-      {/* Starter Code provided by teacher 
-          -- you can remove this once you've updated this file
-       */}
-      <AISelector ais={[{ name: "hi" }, { name: "foo" }]} />
-      <HumanPlayerArea
-        handValues={[3, 5, 10, 12]}
-        playedValues={[1, 2, 4, 6, 7, 8, 9, 11, 13]}
-        cardsWon={[10, 3, 5]}
-        suit="Diamonds"
-      />
+      <div className="target">
+        <h2>Target Area</h2>
+        Targets so far: {targets.slice(0, targetIndex + 1).join(", ")}
+        <br />
+        Lost points so far: {trash.join(",")}
+        <div>Current Target: {targets[targetIndex]}</div>
+        <TargetArea
+          target={targets[targetIndex]}
+          trash={trash}
+          suit={targetSuit}
+        />
+      </div>
+      <div className="human">
+        <h2>Human Area</h2>
+        <HumanPlayerArea
+          onCardPlayed={onCardPlayed}
+          handValues={humanHand}
+          playedValues={humanPlayed}
+          cardsWon={humanWon}
+          suit={otherSuits[0]}
+        />
+      </div>
+      {ais.map((ai, idx) => (
+        <div className={`aiPlayer player-${idx + 1}`}>
+          <PlayerArea
+            ai={ai}
+            suit={otherSuits[idx + 1]}
+            hand={aiHands[idx + 1]}
+            playedValues={aiPlayed[idx]}
+            cardsWon={aiWon[idx]}
+          />
+        </div>
+      ))}
+      <div className="round">
+        {targetIndex <= 12 ? (
+          <div>Round {targetIndex + 1}</div>
+        ) : (
+          <button onClick={resetGame}>New Game?</button>
+        )}
+      </div>
     </main>
   );
 };

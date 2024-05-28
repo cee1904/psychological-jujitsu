@@ -5,8 +5,9 @@ import {Hand} from "./Hand"
 import {ScoreDisplay} from "./ScoreDisplay"
 
 
-export const PlayerArea = ({playedValues = [5,6,7], cardsWon=[6,11,9], suit="heart", ai}) =>{
+export const PlayerArea = ({playedValues = [5,6,7], cardsWon=[6,11,9], suit="Hearts", ai}) =>{
   return(<div>
+    Player: {ai.name}
     <CardsPlayed values={playedValues} suit={suit}/>
     <ScoreDisplay values={cardsWon}/>
     </div>

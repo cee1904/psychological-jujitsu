@@ -11,6 +11,7 @@ export const HumanPlayerArea = ({
 }) => {
   return (
     <div>
+      Player: Human!
       [Hand
       <Hand values={handValues} suit={suit} onCardPlayed={onCardPlayed}/>] [Played
       <CardsPlayed values={playedValues} suit={suit} />]

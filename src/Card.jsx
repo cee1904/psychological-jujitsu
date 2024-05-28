@@ -1,3 +1,5 @@
+import './card.css'
+
 export const Card = ({
   suit="heart", value=4, onClick=()=>{}
 }) => {
@@ -13,7 +15,7 @@ export const Card = ({
   //  value = value;} 
   
   return (
-    <div onClick={onClick}>
+    <div className="card" onClick={onClick}>
       {suit} {value} {onClick}
     </div>
   )

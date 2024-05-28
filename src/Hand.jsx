@@ -1,6 +1,6 @@
 import {Card} from './Card.jsx';
 
-export const Hand = ({values = [], suit = "hearts"}) => {
+export const Hand = ({values = [], suit = "hearts", onCardPlayed=(c)=>console.log('played ',c)}) => {
 
   
   return (
@@ -9,7 +9,8 @@ export const Hand = ({values = [], suit = "hearts"}) => {
     {
     values.map(
       (value)=>(
-        <Card  
+        <Card 
+          onClick={()=>onCardPlayed(value)} 
           suit = {suit}
           value = {value}
         />

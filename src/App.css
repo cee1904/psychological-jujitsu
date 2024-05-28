@@ -1,7 +1,39 @@
 /* Starter Code for a simple App */
 body {
-    background-color: #05053a;
-    color: #fafaff;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #05053a;
+  color: #fafaff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 /* End starter code */
+
+main {
+  display: grid;
+  grid-template-areas:
+    ". target ."
+    "one round  two"
+    ". human .";
+}
+.round {
+  grid-area: round;
+  display: grid;
+  place-content: center;
+}
+.target {
+  grid-area: target;
+  display: grid;
+  place-content: center;
+}
+.human,
+.aiPlayer {
+  display: grid;
+  place-content: center;
+}
+.player-2 {
+  grid-area: two;
+}
+.player-1 {
+  grid-area: one;
+}
+.human {
+  grid-area: human;
+}
