@@ -25,6 +25,11 @@ const generateHand = (shuffle = false) => {
   return hand;
 };
 
+const handleAIChange = ( newAI) => {
+  
+  setAIs(newAI);
+};
+
 const App = () => {
   const targetSuit = "hearts";
   const otherSuits = [
@@ -173,6 +178,11 @@ const App = () => {
       </div>
       {ais.map((ai, idx) => (
         <div className={`aiPlayer player-${idx + 1}`}>
+<AISelector
+
+selected = {ai}
+ais = {ais}
+onSelect = {}
           <PlayerArea
             ai={ai}
             suit={otherSuits[idx + 1]}
@@ -182,6 +192,7 @@ const App = () => {
           />
         </div>
       ))}
+
       <div className="round">
         {targetIndex <= 12 ? (
           <div>Round {targetIndex + 1}</div>
