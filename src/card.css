@@ -3,8 +3,19 @@
   width: 48px;
   height: 72px;
   display: inline-block;
-  font-size: x-small;
   margin-right: 4px;
   margin-top: 4px;
   user-select: none;
+  box-shadow: 3px 3px #fff6;
+}
+
+.num {
+  font-size: normal;
+  font-weight: bold;
+}
+.top {
+  margin-right: auto;
+}
+.bottom {
+  margin-left: auto;
 }
