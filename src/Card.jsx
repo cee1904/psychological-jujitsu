@@ -1,22 +1,35 @@
 import "./card.css";
 
 export const Card = ({ suit = "heart", value = 4, onClick = () => {} }) => {
-  //  if (value === "K") {
-  //   value = 13;
-  // } else if (value === "Q") {
-  // value = 12;
-  //  } else if (value === "J") {
-  //  value = 11;
-  // } else if (value === "A") {
-  //  value = 1;
-  //} else {
-  //  value = value;}
-
+let displayValue = value;
+if (value === 13){
+  displayValue = "K"
+}
+if (value === 12){
+  displayValue = "Q"
+}
+if (value === 11){
+  displayValue = "J"
+}
+if (value === 1){
+  displayValue = "A"
+}
   return (
     <div className="card" onClick={onClick}>
-      <div class="num top">{value} </div>
-      <div class="value">{suit[0]}</div>
-      <div class="num bottom">{value} </div>
+            <div className='top'>
+                <div className='number'>{displayValue}</div>
+                <div className='symbol'><img className='symbol bottom' src={suitImages[suit]} alt={suit} /></div>
+            </div>
+            <div className='bottom'>
+                <div className='number bottom'>{displayValue}</div>
+                <div className='symbol bottom'><img className='symbol bottom' src={suitImages[suit]} alt={suit} /></div>
+            </div>
     </div>
   );
+};
+const suitImages = {
+  'hearts': 'hearts.png',
+  'spades': 'spades.png',
+  'diamonds': 'diamonds.png',
+  'clubs': 'clubs.png'
 };
