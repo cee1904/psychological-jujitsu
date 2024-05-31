@@ -8,7 +8,8 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
-
+import { hinkleAi } from "./hinkleAi";
+import { brucienAI } from "./brucienAi";
 const generateHand = (shuffle = false) => {
   const hand = [];
   for (let i = 1; i <= 13; i++) {
@@ -25,8 +26,6 @@ const generateHand = (shuffle = false) => {
   return hand;
 };
 
-
-
 const App = () => {
   const targetSuit = "hearts";
   const otherSuits = [
@@ -39,7 +38,12 @@ const App = () => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
-  const [availableAIs,setUpdatedAIs] = useState([orderedDummy,targetDummy]);
+  const [availableAIs, setUpdatedAIs] = useState([
+    orderedDummy,
+    targetDummy,
+    brucienAI,
+    hinkleAi,
+  ]);
   const [ais, setAIs] = useState([orderedDummy, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
@@ -53,17 +57,17 @@ const App = () => {
   const [aiPlayed, setAIPlayed] = useState(ais.map((a) => []));
   const [aiWon, setAIWon] = useState(ais.map((a) => []));
 
-  const handleAIChange = ( newAIName,idx) => {
+  const handleAIChange = (newAIName, idx) => {
     // Find the new AI object based on the newAIName
-console.log(newAIName)
+    console.log(newAIName);
 
-    let newAI = ais.find(ai => ai.name === newAIName);
-    if (!newAI) newAI = availableAIs.find(ai => ai.name === newAIName);
-  
+    let newAI = ais.find((ai) => ai.name === newAIName);
+    if (!newAI) newAI = availableAIs.find((ai) => ai.name === newAIName);
+
     // Create a new list with the updated AI at the specified index
     const updatedAIs = [...ais];
     updatedAIs[idx] = newAI;
-  
+
     // Update the state with the new AI list
     setAIs(updatedAIs);
   };
@@ -190,17 +194,13 @@ console.log(newAIName)
       </div>
       {ais.map((ai, idx) => (
         <div className={`aiPlayer player-${idx + 1}`}>
-          
-<AISelector
-selected = {ai}
-ais = {ais}
-onSelect = {(newAI) => handleAIChange(newAI,idx)}
-idx = {idx}
-allAIS = {availableAIs}
->
-
-  
-</AISelector>
+          <AISelector
+            selected={ai}
+            ais={ais}
+            onSelect={(newAI) => handleAIChange(newAI, idx)}
+            idx={idx}
+            allAIS={availableAIs}
+          ></AISelector>
 
           <PlayerArea
             ai={ai}
