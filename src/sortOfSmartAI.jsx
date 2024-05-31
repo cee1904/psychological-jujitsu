@@ -6,4 +6,3 @@ export const sortOfSmart = {
     return nextTarget
   },
 };
-
