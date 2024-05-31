@@ -25,6 +25,8 @@ const generateHand = (shuffle = false) => {
   return hand;
 };
 
+
+
 const App = () => {
   const targetSuit = "hearts";
   const otherSuits = [
@@ -37,6 +39,7 @@ const App = () => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
+  const [availableAIs,setUpdatedAIs] = useState([orderedDummy,targetDummy]);
   const [ais, setAIs] = useState([orderedDummy, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
@@ -50,6 +53,20 @@ const App = () => {
   const [aiPlayed, setAIPlayed] = useState(ais.map((a) => []));
   const [aiWon, setAIWon] = useState(ais.map((a) => []));
 
+  const handleAIChange = ( newAIName,idx) => {
+    // Find the new AI object based on the newAIName
+console.log(newAIName)
+
+    let newAI = ais.find(ai => ai.name === newAIName);
+    if (!newAI) newAI = availableAIs.find(ai => ai.name === newAIName);
+  
+    // Create a new list with the updated AI at the specified index
+    const updatedAIs = [...ais];
+    updatedAIs[idx] = newAI;
+  
+    // Update the state with the new AI list
+    setAIs(updatedAIs);
+  };
   /*
    * @return the index of winner, or -1 if no one wins
    */
@@ -173,6 +190,18 @@ const App = () => {
       </div>
       {ais.map((ai, idx) => (
         <div className={`aiPlayer player-${idx + 1}`}>
+          
+<AISelector
+selected = {ai}
+ais = {ais}
+onSelect = {(newAI) => handleAIChange(newAI,idx)}
+idx = {idx}
+allAIS = {availableAIs}
+>
+
+  
+</AISelector>
+
           <PlayerArea
             ai={ai}
             suit={otherSuits[idx + 1]}
@@ -182,6 +211,7 @@ const App = () => {
           />
         </div>
       ))}
+
       <div className="round">
         {targetIndex <= 12 ? (
           <div>Round {targetIndex + 1}</div>
