@@ -1,11 +1,14 @@
 /* Starter Code for a simple App */
 body {
-  background-color: #05053a;
+  background-color: #2b6129;
   color: #fafaff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 /* End starter code */
-
+@font-face {
+  font-family: header;
+  src: url(header.font.ttf);
+}
 main {
   display: grid;
   grid-template-areas:
@@ -18,6 +21,16 @@ main {
   grid-area: head;
   text-align: center;
   border-bottom: 1px solid white;
+  font-family: header;
+  font-size: 3.5vw;
+}
+main {
+width: 100vw;
+height: 100vh;
+background-image: url(/Background.jpeg);
+content: ' ';
+background-repeat: no-repeat;
+background-size: cover;
 }
 .round {
   grid-area: round;
