@@ -11,5 +11,6 @@ export const PlayerArea = ({playedValues = [5,6,7], cardsWon=[6,11,9], suit="Hea
     <CardsPlayed values={playedValues} suit={suit}/>
     <ScoreDisplay values={cardsWon}/>
     </div>
+
   )
 }
