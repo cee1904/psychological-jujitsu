@@ -1,6 +1,7 @@
 .card {
   display: inline-flex;
-  margin-right: 4px;
+  margin-right: -3vw;
+  transform: rotate(-4deg);
   margin-top: 4px;
   user-select: none;
   background-color: white;
