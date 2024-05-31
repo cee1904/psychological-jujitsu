@@ -2,7 +2,7 @@ import { Card } from "./Card";
 
 // Sam and Tristan
 
-export const ScoreDisplay = ({ values = [], suit= "heart"}) => {
+export const ScoreDisplay = ({ values = [], suit= "hearts"}) => {
   let sum = 0;
   values.forEach(
     (v)=>{
