@@ -10,23 +10,12 @@ import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
-const generateHand = (shuffle = false) => {
-  const hand = [];
-  for (let i = 1; i <= 13; i++) {
-    hand.push(i);
-  }
-  if (shuffle) {
-    for (let i = 0; i < hand.length; i++) {
-      let j = Math.floor(Math.random() * hand.length);
-      let temp = hand[j];
-      hand[j] = hand[i];
-      hand[i] = temp;
-    }
-  }
-  return hand;
-};
+import { SimulatorUi } from "./Simulator";
+import { generateHand, getWinnerIndex } from "./gameLogic";
 
-const App = () => {
+const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI];
+
+const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
   const otherSuits = [
     "diamonds",
@@ -38,12 +27,6 @@ const App = () => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
-  const [availableAIs, setUpdatedAIs] = useState([
-    orderedDummy,
-    targetDummy,
-    brucienAI,
-    hinkleAi,
-  ]);
   const [ais, setAIs] = useState([orderedDummy, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
@@ -59,52 +42,18 @@ const App = () => {
   const [playedCards, setPlayedCards] = useState(players.map((a) => []));
   const [wonCards, setWonCards] = useState(players.map((a) => []));
 
-  const handleAIChange = (newAIName, idx) => {
+  const handleAIChange = (newAI, idx) => {
     // Find the new AI object based on the newAIName
     console.log(newAIName);
-
-    let newAI = ais.find((ai) => ai.name === newAIName);
-    if (!newAI) newAI = availableAIs.find((ai) => ai.name === newAIName);
-
     // Create a new list with the updated AI at the specified index
     const updatedAIs = [...ais];
     updatedAIs[idx] = newAI;
-
     // Update the state with the new AI list
     setAIs(updatedAIs);
   };
   /*
    * @return the index of winner, or -1 if no one wins
    */
-  const getWinnerIndex = (bids) => {
-    let maxCard = -1;
-    // First determine the maximum bid
-    for (let b of bids) {
-      if (b > maxCard) {
-        maxCard = b;
-      }
-    }
-    let idx = null; // not found
-    // Iterate through each bid to see if it
-    // is the max card...
-    for (let i = 0; i < bids.length; i++) {
-      let bid = bids[i];
-      // If this matches the max bid...
-      if (bid === maxCard) {
-        if (idx !== null) {
-          // Duplicate -- if there are more than one
-          // winning bid, then nobody wins!
-          return -1;
-        } else {
-          // Otherwise, winning index will be this one
-          // (unless we hit another winning bid as we
-          // iterate through)
-          idx = i;
-        }
-      }
-    }
-    return idx;
-  };
 
   /*
    * onCardPlayed takes a single human play and then uses it to
@@ -196,10 +145,9 @@ const App = () => {
         <div className={`aiPlayer player-${idx + 1}`}>
           <AISelector
             selected={ai}
-            ais={ais}
             onSelect={(newAI) => handleAIChange(newAI, idx)}
             idx={idx}
-            allAIS={availableAIs}
+            allAIs={availableAIs}
           ></AISelector>
 
           <PlayerArea
@@ -246,6 +194,27 @@ const App = () => {
         </div>
       </div>
     </main>
+  );
+};
+
+const App = () => {
+  const UNSET = 0;
+  const GAME_MODE = 1;
+  const SIM_MODE = 2;
+  let [gameMode, setGameMode] = useState(0);
+  return (
+    <div>
+      {gameMode === GAME_MODE ? (
+        <GameUI availableAIs={availableAIs} />
+      ) : gameMode === SIM_MODE ? (
+        <SimulatorUi availableAIs={availableAIs} />
+      ) : (
+        <div>
+          <button onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
+          <button onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
+        </div>
+      )}
+    </div>
   );
 };
 

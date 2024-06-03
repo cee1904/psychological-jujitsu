@@ -8,15 +8,20 @@
  * AISelector Component
  * @param {{ selected: AI, ais : AI[], onSelect: (newAIName: string, idx: number) => void, idx: number }} props
  */
-import React from 'react';
+import React from "react";
 
-export const AISelector = ({ selected, ais, onSelect, idx, allAIS }) => {
+export const AISelector = ({ selected, onSelect, idx, allAIs }) => {
   return (
     <select
       value={selected.name}
-      onChange={(e) => onSelect(e.target.value, idx)}
+      onChange={(e) =>
+        onSelect(
+          allAIs.find((ai) => ai.name === e.target.value),
+          idx
+        )
+      }
     >
-      {allAIS.map((ai) => (
+      {allAIs.map((ai) => (
         <option key={ai.name} value={ai.name}>
           {ai.name}
         </option>
