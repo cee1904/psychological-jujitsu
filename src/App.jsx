@@ -8,13 +8,14 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
+import { sortOfSmart } from "./sortOfSmartAI";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
 
-const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI];
+const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI, sortOfSmart];
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
@@ -28,7 +29,7 @@ const GameUI = ({ availableAIs }) => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
-  const [ais, setAIs] = useState([orderedDummy, targetDummy]);
+  const [ais, setAIs] = useState([sortOfSmart, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
   // generate a hand for each AI -- will need new logic if we actually
