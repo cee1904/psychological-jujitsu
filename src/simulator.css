@@ -1,0 +1,17 @@
+.win {
+  font-weight: bold;
+  color: lime;
+}
+.tie {
+  color: orange;
+}
+.loss {
+  color: #faa;
+}
+th,
+td {
+  text-align: center;
+}
+table {
+  margin: auto;
+}

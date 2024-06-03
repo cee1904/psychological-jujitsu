@@ -10,9 +10,6 @@ return ( <div>
   (value)=><Card value={value} suit={suit}/>
 )
 }
- Value= {values} 
- <br></br>
- Suit= {suit}
 </div> );
 
 } 
