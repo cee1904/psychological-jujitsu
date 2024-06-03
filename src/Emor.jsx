@@ -1,5 +1,5 @@
-export const EmorAI = {
-  name: "Emor", // a cute name
+export const emoRAI = {
+  name: "emoR", // a cute name
   icon: "-", // an image link
 getNextCard: (hand, targets, opponentPlays) => {
   let weight = 0;
