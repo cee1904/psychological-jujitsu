@@ -8,6 +8,7 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
+import {drake} from "./drake"
 
 const generateHand = (shuffle = false) => {
   const hand = [];
@@ -37,7 +38,7 @@ const App = () => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
-  const [ais, setAIs] = useState([orderedDummy, targetDummy]);
+  const [ais, setAIs] = useState([drake, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
   // generate a hand for each AI -- will need new logic if we actually
