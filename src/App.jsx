@@ -8,6 +8,8 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
+
+import {drake} from "./drake"
 import { sortOfSmart } from "./sortOfSmartAI";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
@@ -15,7 +17,8 @@ import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
 
-const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI, sortOfSmart];
+const availableAIs = [orderedDummy, targetDummy, hinkleAi, 
+                      brucienAI, randoAI, sortOfSmart, drake];
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
