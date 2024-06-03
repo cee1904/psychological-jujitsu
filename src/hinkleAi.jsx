@@ -36,18 +36,15 @@ export const hinkleAi = {
       // last card played by each opponent
       opponentPlays.map((plays) => plays[plays.length - 1])
     );
-    console.log("Last round was ", lastTarget);
-    console.log("The winning strategy was +", lastRoundStrategy);
     let nextTarget = targets[targets.length - 1];
+    // My ideal card is the card that would have beaten
+    // last round's opponent's strategy by one
     let idealPlay = nextTarget + lastRoundStrategy + 1;
-    console.log("This round is:", nextTarget);
-    console.log("I want to play", idealPlay);
     if (hand.includes(idealPlay)) {
-      console.log("And I can!");
+      // If I can, play it!
       return idealPlay;
     } else {
-      console.log("But I do not have it, so I will give up");
-      console.log("and play my lowest card from ", hand);
+      // Otherwise play the lowest card I have
       return Math.min(...hand);
     }
   },
