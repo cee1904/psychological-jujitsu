@@ -12,17 +12,21 @@ body {
 main {
   display: grid;
   grid-template-areas:
-    "head head head"
-    ". target ."
-    "one round  two"
+    "head head round"
+    "one target  two"
     ". human .";
+  grid-template-rows: max-content;
 }
 .header {
   grid-area: head;
   text-align: center;
   border-bottom: 1px solid white;
   font-family: header;
-  font-size: 3.5vw;
+  font-size: 2.5vw;
+}
+h1.header {
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 main {
   width: 100vw;

@@ -214,7 +214,6 @@ const App = () => {
       {useHumanPlayer ? (
         <div className="human">
           <h2>Human Area</h2>
-          <button onClick={() => setUseHumanPlayer(false)}>Switch to AI</button>
           <HumanPlayerArea
             onCardPlayed={onCardPlayed}
             handValues={hands[2]}
@@ -240,7 +239,9 @@ const App = () => {
           {useHumanPlayer ? (
             "Click a Card to Play It"
           ) : (
-            <button onClick={() => playAIs([])}>Next Turn</button>
+            <button onClick={() => playAIs([])} disabled={targetIndex > 12}>
+              Next Turn
+            </button>
           )}
         </div>
       </div>
