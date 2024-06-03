@@ -43,8 +43,6 @@ const GameUI = ({ availableAIs }) => {
   const [wonCards, setWonCards] = useState(players.map((a) => []));
 
   const handleAIChange = (newAI, idx) => {
-    // Find the new AI object based on the newAIName
-    console.log(newAIName);
     // Create a new list with the updated AI at the specified index
     const updatedAIs = [...ais];
     updatedAIs[idx] = newAI;
