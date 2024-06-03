@@ -8,6 +8,10 @@
 .loss {
   color: #faa;
 }
-th,td {
+th,
+td {
   text-align: center;
+}
+table {
+  margin: auto;
 }

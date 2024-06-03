@@ -187,14 +187,6 @@ export const SimulatorUi = ({ availableAIs }) => {
                         {point}
                       </td>
                     ))}
-                    <td>
-                      {gameData.standings.map((standing, i) => (
-                        <span key={i} className={standing}>
-                          {standing}
-                          {i < gameData.standings.length - 1 ? ", " : ""}
-                        </span>
-                      ))}
-                    </td>
                   </tr>
                 ))}
               </tbody>
