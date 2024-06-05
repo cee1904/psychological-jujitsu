@@ -18,8 +18,35 @@ export const drake = {
       royalPlacer --;
       return randomRoyal();
     }
-    if (nextTarget < 10){
-      return hand[0];
+    if (nextTarget === 10){
+      return 1;
+    }
+    if (nextTarget === 9){
+      return 2;
+    }
+    if (nextTarget === 8){
+      return 3;
+    }
+    if (nextTarget === 7){
+      return 10;
+    }
+    if (nextTarget === 6){
+      return 9;
+    }
+    if (nextTarget === 5){
+      return 8;
+    }
+    if (nextTarget === 4){
+      return 7;
+    }
+    if (nextTarget === 3){
+      return 6;
+    }
+    if (nextTarget === 2){
+      return 5;
+    }
+    if (nextTarget === 1){
+      return 4;
     }
 
   },
