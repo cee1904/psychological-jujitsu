@@ -1,5 +1,6 @@
 export const playFirstCard = (target) => {
-  let delta = Math.floor(Math.random() * 10 - 5);
+  let randoRange = 10;
+  let delta = Math.floor(Math.random() * randoRange - randoRange / 2);
   let value = target + delta;
   if (value < 1) {
     return 1;
@@ -39,12 +40,20 @@ export const hinkleAi = {
     let nextTarget = targets[targets.length - 1];
     // My ideal card is the card that would have beaten
     // last round's opponent's strategy by one
-    let idealPlay = nextTarget + lastRoundStrategy + 1;
+    let idealPlay = Math.max(
+      // ensure we play ace or higher
+      Math.min(
+        // ensure we play king or lower
+        nextTarget + lastRoundStrategy + 1,
+        13
+      ),
+      1
+    );
     if (hand.includes(idealPlay)) {
       // If I can, play it!
       return idealPlay;
     } else {
-      // Otherwise play the lowest card I have
+      // if it's low, play lowest card?
       return Math.min(...hand);
     }
   },
