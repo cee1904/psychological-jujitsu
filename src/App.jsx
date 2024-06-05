@@ -9,16 +9,24 @@ import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
 
-import {drake} from "./drake"
+import { drake } from "./drake";
 import { sortOfSmart } from "./sortOfSmartAI";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
+import { isValid } from "./validator";
 
-const availableAIs = [orderedDummy, targetDummy, hinkleAi, 
-                      brucienAI, randoAI, sortOfSmart, drake];
+const availableAIs = [
+  orderedDummy,
+  targetDummy,
+  hinkleAi,
+  brucienAI,
+  randoAI,
+  sortOfSmart,
+  drake,
+];
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
@@ -84,10 +92,22 @@ const GameUI = ({ availableAIs }) => {
       let myHand = hands[cardsPlayedThisRound.length];
       let myPlayed = playedCards[cardsPlayedThisRound.length];
       let card = ai.getNextCard(
-        myHand,
+        [...myHand],
         targetsSoFar,
         playedCards.filter((pp) => pp != myPlayed)
       );
+      if (!isValid(card, myHand)) {
+        window.alert("Invalid card played by AI", card);
+        console.error(
+          "Invalid card ",
+          card,
+          "played from hand",
+          myHand,
+          "by AI",
+          ai
+        );
+        throw new Error("Invalid Card");
+      }
       cardsPlayedThisRound.push(card);
     });
     cardsPlayedThisRound = [...cardsPlayedThisRound, ...humanCards];
