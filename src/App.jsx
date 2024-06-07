@@ -8,27 +8,32 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
-
+import { jimminyCricketAI } from "./jimminyCricketAi";
 import { drake } from "./drake";
 import { sortOfSmart } from "./sortOfSmartAI";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
+import {emoRAI} from "./Emor";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
 import { seamusAi } from "./seamusAi";
 import { isValid } from "./validator";
 
+
 const availableAIs = [
-  orderedDummy,
-  targetDummy,
-  hinkleAi,
-  brucienAI,
-  randoAI,
-  seamusAi,
   sortOfSmart,
-  drake,
+  brucienAI,
+  seamusAi,
+  drake, // d
+  emoRAI,  
+  targetDummy,
+  randoAI,
+  hinkleAi,
+  jimminyCricketAI,
+  orderedDummy,
 ];
+
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
