@@ -13,8 +13,8 @@ export const HumanPlayerArea = ({
     <div>
       Player: Human!
       [Hand
-      <Hand values={handValues} suit={suit} onCardPlayed={onCardPlayed}/>] [Played
-      <CardsPlayed values={playedValues} suit={suit} />]
+      <Hand values={handValues} suit={suit} onCardPlayed={onCardPlayed}/>
+      <CardsPlayed values={playedValues} suit={suit} />
       <ScoreDisplay values = {cardsWon}/>
     </div>
   );

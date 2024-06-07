@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AISelector } from "./AISelector";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import "./simulator.css";
+import { isValid } from "./validator";
 export const SimulatorUi = ({ availableAIs }) => {
   let [selectAIMode, setSelectAIMode] = useState(true);
   let [ais, setAIs] = useState([
@@ -25,13 +26,26 @@ export const SimulatorUi = ({ availableAIs }) => {
     let won = [[], [], []];
     for (let round = 0; round < targets.length; round++) {
       let targetsSoFar = targets.slice(0, round + 1);
-      let plays = ais.map((ai, idx) =>
-        ai.getNextCard(
-          hands[idx],
+      let plays = ais.map((ai, idx) => {
+        let card = ai.getNextCard(
+          [...hands[idx]],
           targetsSoFar,
           played.filter((pp) => pp != played[idx])
-        )
-      );
+        );
+        if (isValid(card, hands[idx])) {
+          return card;
+        } else {
+          console.error(
+            "Invalid card",
+            card,
+            "from",
+            hands[idx],
+            "played by AI",
+            ai
+          );
+          return -1;
+        }
+      });
       let winner = getWinnerIndex(plays);
       if (winner > -1) {
         won[winner].push(targets[round]);

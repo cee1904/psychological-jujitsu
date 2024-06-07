@@ -8,12 +8,16 @@ import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
+
+import { drake } from "./drake";
+import { sortOfSmart } from "./sortOfSmartAI";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
 import { seamusAi } from "./seamusAi";
+import { isValid } from "./validator";
 
 const availableAIs = [
   orderedDummy,
@@ -22,6 +26,8 @@ const availableAIs = [
   brucienAI,
   randoAI,
   seamusAi,
+  sortOfSmart,
+  drake,
 ];
 
 const GameUI = ({ availableAIs }) => {
@@ -36,7 +42,7 @@ const GameUI = ({ availableAIs }) => {
     "robots",
   ];
   const [numberOfAIs, setNumberOfAIs] = useState(2); // may never change
-  const [ais, setAIs] = useState([orderedDummy, targetDummy]);
+  const [ais, setAIs] = useState([sortOfSmart, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
   // generate a hand for each AI -- will need new logic if we actually
@@ -88,10 +94,22 @@ const GameUI = ({ availableAIs }) => {
       let myHand = hands[cardsPlayedThisRound.length];
       let myPlayed = playedCards[cardsPlayedThisRound.length];
       let card = ai.getNextCard(
-        myHand,
+        [...myHand],
         targetsSoFar,
         playedCards.filter((pp) => pp != myPlayed)
       );
+      if (!isValid(card, myHand)) {
+        window.alert("Invalid card played by AI", card);
+        console.error(
+          "Invalid card ",
+          card,
+          "played from hand",
+          myHand,
+          "by AI",
+          ai
+        );
+        throw new Error("Invalid Card");
+      }
       cardsPlayedThisRound.push(card);
     });
     cardsPlayedThisRound = [...cardsPlayedThisRound, ...humanCards];
@@ -216,9 +234,9 @@ const App = () => {
       ) : gameMode === SIM_MODE ? (
         <SimulatorUi availableAIs={availableAIs} />
       ) : (
-        <div>
-          <button onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
-          <button onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
+        <div className ='startPage'>
+          <button className='playGame' onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
+          <button className='runSim' onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
         </div>
       )}
     </div>
