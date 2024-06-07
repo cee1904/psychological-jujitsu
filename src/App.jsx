@@ -10,11 +10,12 @@ import { useEffect, useState } from "react";
 import { orderedDummy, targetDummy } from "./dumbAi";
 import { hinkleAi } from "./hinkleAi";
 import { brucienAI } from "./brucienAi";
+import {emoRAI} from "./Emor";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
 
-const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI];
+const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI, emoRAI];
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";

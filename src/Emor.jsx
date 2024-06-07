@@ -11,45 +11,25 @@ getNextCard: (hand, targets, opponentPlays) => {
   let handA = cardsLeft.filter((card)=>!opponentPlays[0].includes(card))
   let handB = cardsLeft.filter((card)=>!opponentPlays[1].includes(card))
 
-if(opponentPlays.length >= 1) {
+debugger
+  // Handle special cases for targets 13 and 12
+  if (nextTarget === 13) {
+    return hand.includes(12) ? 12 : hand[0]; // Return 12 if available
+  } else if (nextTarget === 12) {
+    return hand.includes(11) ? 11 : hand[0]; // Return 11 if available
+  }
 
-  if (nextTarget >= 10) {
-    weight += 1;
-    
-    
+  // General logic for other targets
+  for (let i = 10; i > 1; i--) {
+    if (nextTarget === i) {
+      if (i % 2 === 0) {
+        return hand.includes(i - 2) ? i - 2 : hand[0]; // Return i-2 if available
+      } else {
+        return hand.includes(i - 1) ? i - 1 : hand[0]; // Return i-1 if available
       }
-
- opponentPlays.forEach(opponentCard => {
-let cardindex = cardsLeft.findIndex(opponentCard)
-cardsLeft = cardsLeft.splice(cardindex,1)
-
-})
-
-hand.forEach(card => {
-cardsLeft.forEach(oCard => {
-
-if (card >= nextTarget && weight >= 3){
-
-if (card > oCard){
-
-cardOptions.push(card)
-
-}
-
-}
-
- 
-
-
-
-
-})
-
-
-});
-
-
-}
+    }
 
   }
-};
+
+}
+}
