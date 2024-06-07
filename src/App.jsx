@@ -16,6 +16,7 @@ import { brucienAI } from "./brucienAi";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
+import { seamusAi } from "./seamusAi";
 import { isValid } from "./validator";
 
 const availableAIs = [
@@ -24,6 +25,7 @@ const availableAIs = [
   hinkleAi,
   brucienAI,
   randoAI,
+  seamusAi,
   sortOfSmart,
   drake,
 ];
