@@ -17,19 +17,10 @@ debugger
     return hand.includes(12) ? 12 : hand[0]; // Return 12 if available
   } else if (nextTarget === 12) {
     return hand.includes(11) ? 11 : hand[0]; // Return 11 if available
-  }
+  } else {return hand[nextTarget-1]}
 
   // General logic for other targets
-  for (let i = 10; i > 1; i--) {
-    if (nextTarget === i) {
-      if (i % 2 === 0) {
-        return hand.includes(i - 2) ? i - 2 : hand[0]; // Return i-2 if available
-      } else {
-        return hand.includes(i - 1) ? i - 1 : hand[0]; // Return i-1 if available
-      }
-    }
-
-  }
+  
 
 }
 }
