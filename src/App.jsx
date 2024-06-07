@@ -232,9 +232,9 @@ const App = () => {
       ) : gameMode === SIM_MODE ? (
         <SimulatorUi availableAIs={availableAIs} />
       ) : (
-        <div>
-          <button onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
-          <button onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
+        <div className ='startPage'>
+          <button className='playGame' onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
+          <button className='runSim' onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
         </div>
       )}
     </div>
