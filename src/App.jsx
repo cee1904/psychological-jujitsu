@@ -13,8 +13,16 @@ import { brucienAI } from "./brucienAi";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
 import { randoAI } from "./randomAI";
+import { seamusAi } from "./seamusAi";
 
-const availableAIs = [orderedDummy, targetDummy, hinkleAi, brucienAI, randoAI];
+const availableAIs = [
+  orderedDummy,
+  targetDummy,
+  hinkleAi,
+  brucienAI,
+  randoAI,
+  seamusAi,
+];
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
