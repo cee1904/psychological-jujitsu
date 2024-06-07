@@ -4,6 +4,10 @@ export const seamusAi = {
   icon: "", // an image link
   getNextCard: (hand, targets, opponentPlays) => {
     // Play a random card!
+    if (opponentPlays[0].length == 0) {
+      // first round
+      kingSeen = false;
+    }
     let currentTarget = targets[targets.length - 1];
     let maxHand = hand[hand.length - 1];
     let minHand = hand[0];
