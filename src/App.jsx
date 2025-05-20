@@ -7,33 +7,31 @@ import { AISelector } from "./AISelector";
 import { PlayerArea } from "./PlayerArea";
 import { TargetArea } from "./TargetArea";
 import { useEffect, useState } from "react";
-import { orderedDummy, targetDummy } from "./dumbAi";
-import { jimminyCricketAI } from "./jimminyCricketAi";
-import { drake } from "./drake";
-import { sortOfSmart } from "./sortOfSmartAI";
-import { hinkleAi } from "./hinkleAi";
-import { brucienAI } from "./brucienAi";
-import {emoRAI} from "./Emor";
+import { orderedDummy, targetDummy } from "./ai/dumbAi";
+import { jimminyCricketAI } from "./ai/jimminyCricketAi";
+import { drake } from "./ai/drake";
+import { sortOfSmart } from "./ai/sortOfSmartAI";
+import { hinkleAi } from "./ai/hinkleAi";
+import { brucienAI } from "./ai/brucienAi";
+import { emoRAI } from "./ai/Emor";
 import { SimulatorUi } from "./Simulator";
 import { generateHand, getWinnerIndex } from "./gameLogic";
-import { randoAI } from "./randomAI";
-import { seamusAi } from "./seamusAi";
+import { randoAI } from "./ai/randomAI";
+import { seamusAi } from "./ai/seamusAi";
 import { isValid } from "./validator";
-
 
 const availableAIs = [
   sortOfSmart,
   brucienAI,
   seamusAi,
   drake, // d
-  emoRAI,  
+  emoRAI,
   targetDummy,
   randoAI,
   hinkleAi,
   jimminyCricketAI,
   orderedDummy,
 ];
-
 
 const GameUI = ({ availableAIs }) => {
   const targetSuit = "hearts";
@@ -50,11 +48,11 @@ const GameUI = ({ availableAIs }) => {
   const [ais, setAIs] = useState([sortOfSmart, targetDummy]);
   const [trash, setTrash] = useState([]);
   const [humanHand, setHumanHand] = useState(generateHand());
-  // generate a hand for each AI -- will need new logic if we actually
-  // change the number of AIs
+
   const [useHumanPlayer, setUseHumanPlayer] = useState(true);
   let players = [null, ...ais];
-
+  // generate a hand for each AI -- will need new logic if we actually
+  // change the number of AIs
   const [hands, setHands] = useState(players.map((a) => generateHand()));
   const [targets, setTargets] = useState(generateHand(true));
   const [targetIndex, setTargetIndex] = useState(0);
@@ -213,7 +211,7 @@ const GameUI = ({ availableAIs }) => {
         <button onClick={() => setUseHumanPlayer(!useHumanPlayer)}>
           Switch to {useHumanPlayer ? "All AI" : "Human player"}
         </button>
-        <div class="instructions">
+        <div className="instructions">
           {useHumanPlayer ? (
             "Click a Card to Play It"
           ) : (
@@ -239,9 +237,13 @@ const App = () => {
       ) : gameMode === SIM_MODE ? (
         <SimulatorUi availableAIs={availableAIs} />
       ) : (
-        <div className ='startPage'>
-          <button className='playGame' onClick={() => setGameMode(GAME_MODE)}>Play Game</button>
-          <button className='runSim' onClick={() => setGameMode(SIM_MODE)}>Run Simulations</button>
+        <div className="startPage">
+          <button className="playGame" onClick={() => setGameMode(GAME_MODE)}>
+            Play Game
+          </button>
+          <button className="runSim" onClick={() => setGameMode(SIM_MODE)}>
+            Run Simulations
+          </button>
         </div>
       )}
     </div>
