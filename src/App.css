@@ -94,29 +94,51 @@ main {
   border-color: #007bff;
 }
 button.runSim,
-button.playGame{
-width: 30vw;
-height: 30vw;
-border-radius: 50%;
-position: relative;
-animation: mymove 2s infinite;
-font-family: 'button';
-font-size: 4vw;
-color: white;
-background-color: black;
+button.playGame {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  position: relative;
+  animation: mymove 2s infinite;
+  font-family: "button";
+  font-size: 4vw;
+  color: white;
+  background-color: black;
 }
 @keyframes mymove {
-  0%   {width: 30vw; height:30vw;}
-  50% {width: 32vw; height:32vw;}
-  100% {width: 30vw; height:30vw;}
+  0% {
+    width: 30vw;
+    height: 30vw;
+  }
+  50% {
+    width: 32vw;
+    height: 32vw;
+  }
+  100% {
+    width: 30vw;
+    height: 30vw;
+  }
 }
-.startPage{
-display: flex;
-justify-content: space-around;
-align-items: center;
-height: 100vh;
+.startPage {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
 }
 @font-face {
   font-family: button;
   src: url(startbuttons.ttf);
+}
+
+.card-updated {
+  scale: 1.2;
+}
+.score,
+.card-container {
+  transition: scale 500ms;
+}
+.score-updated {
+  scale: 1.2;
+  font-weight: bold;
+  filter: drop-shadow(0 0 5px #000);
 }
