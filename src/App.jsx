@@ -162,11 +162,15 @@ const GameUI = ({ availableAIs }) => {
     <main>
       <h1 className="header">Psychological Jujitsu</h1>
       <div className="target">
-        <TargetArea
-          target={targets[targetIndex]}
-          trash={trash}
-          suit={targetSuit}
-        />
+        {targetIndex < targets.length ? (
+          <TargetArea
+            target={targets[targetIndex]}
+            trash={trash}
+            suit={targetSuit}
+          />
+        ) : (
+          <div className="game-over">Game Over</div>
+        )}
       </div>
 
       {ais.map((ai, idx) => (
