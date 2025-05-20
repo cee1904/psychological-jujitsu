@@ -183,6 +183,7 @@ const GameUI = ({ availableAIs }) => {
           ></AISelector>
 
           <PlayerArea
+            round={targetIndex}
             ai={ai}
             suit={otherSuits[idx]}
             hand={hands[idx]}
