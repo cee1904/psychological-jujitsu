@@ -1,5 +1,5 @@
-export const brucienAI = {
-  name: "Brucien", // a cute name
+export const toriAI = {
+  name: "Tori Vega", // a cute name
   icon: "-", // an image link
   getNextCard: (hand, targets, opponentPlays) => {
     let nextTarget = targets[targets.length - 1];
